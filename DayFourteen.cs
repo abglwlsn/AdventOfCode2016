@@ -50,52 +50,6 @@ namespace AdventOfCode2016
             return lastIndex;
         }
 
-        public class Hash
-        {
-            public Hash(int index, string value, string character)
-            {
-                Index = index;
-                Value = value;
-                RepeatedCharacter = character;
-            }
-
-            public int Index { get; set; }
-            public string Value { get; set; }
-            public string RepeatedCharacter { get; set; }
-        }
-
-
-        public class HashCollection
-        {
-            public HashCollection()
-            {
-                Hashes = new List<Hash>();
-            }
-
-            public List<Hash> Hashes { get; set; }
-
-            public bool HasHashAtIndex(int index)
-            {
-                return Hashes.Any(h => h.Index == index);
-            }
-            public void Add(Hash hash)
-            {
-                Hashes.Add(hash);
-            }
-        }
-
-        public class Key
-        {
-            public Key(string hash, int index)
-            {
-                Hash = hash;
-                Index = index;
-            }
-
-            public string Hash { get; set; }
-            public int Index { get; set; }
-        }
-
         public int DetermineIndexOf64thKey()
         {
             var salt = "cuanljph";

@@ -17,22 +17,17 @@ namespace AdventOfCode2016
             var possibleTriangles = 0;
             var triangles = Regex.Split(input, "\r");
 
-            for ( var i = 0; i < triangles.Length; i++)
+            foreach (string triangle in triangles)
             {
-                var sides = Regex.Split(triangles[i].Trim(' '), "  ").ToList();
+                var sides = Regex.Split(triangle.Trim(' '), "  ").ToList();
                 sides.RemoveAll(string.IsNullOrEmpty);
 
-                var lengths = new List<int>();
-                foreach (var side in sides)
-                {
-                    var length = Convert.ToInt32(side.Trim());
-                    lengths.Add(length);
-                }
+                var lengths = sides.Select(side => Convert.ToInt32(side.Trim())).ToList();
                 lengths = lengths.OrderBy(num => num).ToList();
 
                 var isPossible = (lengths[0] + lengths[1]) > lengths[2];
                 if (isPossible)
-                    possibleTriangles++;        
+                    possibleTriangles++;
             }
 
             return possibleTriangles;
