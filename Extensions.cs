@@ -47,6 +47,68 @@ namespace AdventOfCode2016
         {
             return Regex.IsMatch(input, "([a-zA-Z0-9])\\1{" + (sequenceLength - 1) + "}") ? Regex.Match(input, "([a-zA-Z0-9])\\1{" + (sequenceLength - 1) + "}").Value[0].ToString() : null;
         }
+
+        public static StringBuilder SwapByPosition(this StringBuilder code, string[] segments)
+        {
+            var x = Convert.ToInt32(segments[2]);
+            var y = Convert.ToInt32(segments[5]);
+            var Xvalue = code[x];
+            var Yvalue = code[y];
+
+            code[x] = Yvalue;
+            code[y] = Xvalue;
+
+            return code;
+        }
+
+        public static StringBuilder SwapByLetter(this StringBuilder code, string[] segments)
+        {
+            var firstLetter = segments[2][0];
+            var secondLetter = segments[5][0];
+            var newCode = code.ToString().Select(
+                        x => x == firstLetter ? secondLetter : (x == secondLetter ? firstLetter : x)).ToArray();
+            code.Clear();
+            code.Append(newCode);
+
+            return code;
+        }
+
+        public static StringBuilder RotateLeft(this StringBuilder code, int distance)
+        {
+            var newCode = new char[code.Length];
+            var array = code.ToString().ToArray();
+            Array.Copy(array, distance, newCode, 0, array.Length - distance);
+            Array.Copy(array, 0, newCode, array.Length - distance, distance);
+            code.Clear();
+            code.Append(newCode);
+
+            return code;
+        }
+
+        public static StringBuilder RotateRight(this StringBuilder code, int distance)
+        {
+            var newCode = new char[code.Length];
+            var array = code.ToString().ToArray();
+            Array.Copy(array, 0, newCode, distance, array.Length - distance);
+            Array.Copy(array, array.Length - distance, newCode, 0, distance);
+            code.Clear();
+            code.Append(newCode);
+            return code;
+        }
+
+        public static StringBuilder Reverse(this StringBuilder code, string[] segments)
+        {
+            var startIndex = Convert.ToInt32(segments[2]);
+            var endIndex = Convert.ToInt32(segments[4]);
+            var section = code.ToString().Substring(startIndex, (endIndex - startIndex + 1)).ToCharArray();
+            var newSection = section.Reverse().ToArray();
+
+            if (section.Length != newSection.Length)
+                throw new InvalidOperationException();
+
+            code.Replace(new string(section), new string(newSection), startIndex, (endIndex - startIndex + 1));
+            return code;
+        }
     }
 }
 
